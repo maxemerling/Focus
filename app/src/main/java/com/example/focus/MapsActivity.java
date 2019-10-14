@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ResourceManagerInternal;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
@@ -31,7 +32,6 @@ public class MapsActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-
 
             Places.initialize(getApplicationContext(), "AIzaSyD1xfUl2pD9LSSXCsze6yu_P2JojhzVsOc");
             PlacesClient placesClient = Places.createClient(this);

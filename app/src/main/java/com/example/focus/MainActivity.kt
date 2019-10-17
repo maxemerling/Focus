@@ -1,23 +1,42 @@
 package com.example.focus
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+
 
 class MainActivity : AppCompatActivity() {
+
+    val REQUEST_LOCATION = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         findViewById<Button>(R.id.add_search_button).setOnClickListener {
-            startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+            startActivity(Intent(this@MainActivity, SearchActivity::class.java))
         }
+
+        findViewById<Button>(R.id.my_list_button).setOnClickListener {
+            startActivity(Intent(this@MainActivity, ListActivity::class.java))
+        }
+
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED)
+            || (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQUEST_LOCATION)
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

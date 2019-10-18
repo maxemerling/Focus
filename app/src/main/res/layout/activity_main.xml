@@ -58,14 +58,14 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="Add By Search" />
+            android:text="Add Location" />
 
         <Button
-            android:id="@+id/add_map_button"
+            android:id="@+id/map_button"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="Add By Map" />
+            android:text="View Map" />
 
     </LinearLayout>
 

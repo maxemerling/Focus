@@ -24,6 +24,8 @@
             android:value="AIzaSyAlPaa0hBK3RwIO5iZNEXm6fyOD7y7Hg1Y" />
 
         <activity android:name=".SearchActivity" />
+        <activity android:name=".ListActivity" />
+        <activity android:name=".MapsActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

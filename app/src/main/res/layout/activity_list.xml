@@ -20,8 +20,8 @@
         android:id="@+id/focus_location_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_weight="4"
+        tools:listitem="@layout/list_row"></androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>

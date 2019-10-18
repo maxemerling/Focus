@@ -32,6 +32,7 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.*
+import com.google.firebase.database.FirebaseDatabase
 
 
 class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCallback {
@@ -41,6 +42,7 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
 
     lateinit var radius: EditText
     lateinit var currCircle: Circle
+    var currPlace: Place? = null
 
     lateinit var googleMap: GoogleMap
 
@@ -48,12 +50,12 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        var location: String
-        location = currCircle.toString()
-        val intent = Intent(this, ListActivity::class.java)
-        intent.putExtra("location_string", location)
         findViewById<Button>(R.id.add_button).setOnClickListener {
-            startActivity(Intent(this@SearchActivity, ListActivity::class.java))
+            if (currPlace != null) {
+                val latLng = currPlace?.latLng
+                MyDatabase(this, FirebaseDatabase.getInstance().reference).write(MyLocation(currPlace?.name ?: "name", latLng?.latitude ?: 0.0, latLng?.longitude ?: 0.0))
+                startActivity(Intent(this, ListActivity::class.java))
+            }
         }
 
 
@@ -99,6 +101,7 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
     }
 
     override fun onPlaceSelected(place: Place) {
+        currPlace = place
         findViewById<TextView>(R.id.result).setText(place.name)
         moveMap(place)
     }

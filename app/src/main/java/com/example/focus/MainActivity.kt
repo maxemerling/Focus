@@ -25,19 +25,24 @@ class MainActivity : AppCompatActivity() {
     private var requestingLocationUpdates = true
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
+    private lateinit var geofencingClient: GeofencingClient
+    private lateinit var geofenceList: ArrayList<Geofence>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        geofencingClient = LocationServices.getGeofencingClient(this)
         mCurrentLocation = fusedLocationClient.lastLocation
         locationRequest = LocationRequest.create()
 
+        //update geofenceList with the values of Firebase
+        //Firebase must store requestId, circularRegion, ExpirationDuration, setTransitionTypes
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for (location in locationResult.locations){
+                    //if that location is in the database, then turn on silent mode
 
                 }
             }

@@ -3,22 +3,45 @@ package com.example.focus
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationProvider
 import android.os.Bundle
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 
 
 class MainActivity : AppCompatActivity() {
 
     val REQUEST_LOCATION = 123
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    lateinit var mCurrentLocation: Task<Location>
+    private var requestingLocationUpdates = true
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mCurrentLocation = fusedLocationClient.lastLocation
+        locationRequest = LocationRequest.create()
+
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations){
+
+                }
+            }
+        }
 
         findViewById<Button>(R.id.add_search_button).setOnClickListener {
             startActivity(Intent(this@MainActivity, SearchActivity::class.java))
@@ -37,6 +60,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (requestingLocationUpdates) startLocationUpdates()
+    }
+
+    private fun startLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

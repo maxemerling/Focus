@@ -33,6 +33,7 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
     lateinit var radius: EditText
     lateinit var currCircle: Circle
     var currPlace: Place? = null
+    var radiusValue: Double = 10.0
 
     lateinit var googleMap: GoogleMap
 
@@ -43,8 +44,9 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
         findViewById<Button>(R.id.add_button).setOnClickListener {
             if (currPlace != null) {
                 val latLng = currPlace?.latLng
-                MyDatabase(this, FirebaseDatabase.getInstance().reference).write(MyLocation(currPlace?.name ?: "name", latLng?.latitude ?: 0.0,
-                    latLng?.longitude ?: 0.0, currCircle?.radius ?: 0.0))
+                val location: MyLocation = MyLocation(currPlace?.name ?: "name", latLng?.latitude ?: 0.0,
+                    latLng?.longitude ?: 0.0, radiusValue)
+                MyDatabase(this, FirebaseDatabase.getInstance().reference).write(location)
                 startActivity(Intent(this, ListActivity::class.java))
             }
         }
@@ -67,6 +69,7 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val size : Double = radius.text.toString().toDouble()
+                radiusValue = size
                 currCircle.radius = size
             }
         })

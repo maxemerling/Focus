@@ -19,6 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
+        <receiver android:name="com.example.focus.GeofenceBroadcastReceiver"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAlPaa0hBK3RwIO5iZNEXm6fyOD7y7Hg1Y" />

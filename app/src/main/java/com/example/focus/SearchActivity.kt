@@ -1,8 +1,5 @@
 package com.example.focus
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,17 +16,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import android.location.LocationManager
-import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.app.ComponentActivity.ExtraData
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.location.Location
 import android.widget.Button
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.*
 import com.google.firebase.database.FirebaseDatabase
@@ -53,7 +43,8 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
         findViewById<Button>(R.id.add_button).setOnClickListener {
             if (currPlace != null) {
                 val latLng = currPlace?.latLng
-                MyDatabase(this, FirebaseDatabase.getInstance().reference).write(MyLocation(currPlace?.name ?: "name", latLng?.latitude ?: 0.0, latLng?.longitude ?: 0.0))
+                MyDatabase(this, FirebaseDatabase.getInstance().reference).write(MyLocation(currPlace?.name ?: "name", latLng?.latitude ?: 0.0,
+                    latLng?.longitude ?: 0.0, currCircle?.radius ?: 0.0))
                 startActivity(Intent(this, ListActivity::class.java))
             }
         }

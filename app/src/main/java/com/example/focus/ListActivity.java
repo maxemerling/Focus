@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Adapter;
 
+import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,7 @@ public class ListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MyAdapter adapter;
+    private GeofencingClient geofencingClient;
 
 
     @Override
@@ -33,6 +36,9 @@ public class ListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.focus_location_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter = new MyAdapter( this));
+        geofencingClient = LocationServices.getGeofencingClient(this);
+
+
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 

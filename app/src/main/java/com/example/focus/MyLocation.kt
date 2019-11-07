@@ -1,11 +1,13 @@
 package com.example.focus
 
+import android.util.Log
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.maps.model.LatLng
 
 data class MyLocation (val name: String, val lat: Double, val lng: Double, val radius: Double) {
 
     fun formatLoc(): String = "$lat, $lng"
+
 
     fun toMap(): Map<String, Any> = mapOf(Pair(NAME, name), Pair(LAT, lat), Pair(LNG, lng), Pair(RADIUS, radius))
 

@@ -68,7 +68,8 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val size : Double = radius.text.toString().toDouble()
+                val radiusText = radius.text.toString()
+                val size : Double = if (radiusText.isEmpty()) 0.0 else radiusText.toDouble()
                 radiusValue = size
                 currCircle.radius = size
             }
@@ -150,7 +151,7 @@ class SearchActivity : FragmentActivity(), PlaceSelectionListener, OnMapReadyCal
 
                 val pos: LatLng = LatLng(latitude, longitude)
 
-                currCircle = googleMap.addCircle(CircleOptions().center(pos).strokeColor(Color.RED).fillColor(Color.BLUE))
+                currCircle = googleMap.addCircle(CircleOptions().center(pos).strokeColor(Color.RED).fillColor(Color.LTGRAY))
                 moveMap(pos, "($latitude, $longitude)")
             }
     }

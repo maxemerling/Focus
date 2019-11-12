@@ -19,22 +19,33 @@ class MyDatabase(context: Context, val databaseReference: DatabaseReference) {
     }
 
     fun write(location: MyLocation) {
-        val childUpdates = HashMap<String, Any>()
-        childUpdates[HEADER + getKey()] = location.toMap()
-        databaseReference.updateChildren(childUpdates)
+        val key = databaseReference.push().key as String
+        databaseReference.child(key).setValue(location)
     }
 
+//    fun readSnapshot(snapshot: DataSnapshot) : List<MyLocation> {
+//        val dataMap : Map<String, Any> = (snapshot.value as Map<String, Any>)[androidId] as Map<String, Any>
+//
+//        val newData: MutableList<MyLocation> = ArrayList()
+//
+//        for (id in dataMap.keys) {
+//            newData.add(MyLocation(dataMap[id] as Map<String, Any>))
+//        }
+//
+//        return newData
+//    }
+
     fun readSnapshot(snapshot: DataSnapshot) : List<MyLocation> {
-        val dataMap : Map<String, Any> = (snapshot.value as Map<String, Any>)[androidId] as Map<String, Any>
 
         val newData: MutableList<MyLocation> = ArrayList()
 
-        for (id in dataMap.keys) {
-            newData.add(MyLocation(dataMap[id] as Map<String, Any>))
+        for (location in snapshot.child(androidId).children) {
+            newData.add(location.getValue(MyLocation::class.java) as MyLocation)
         }
 
         return newData
     }
+
 
     companion object {
         const val USERS = "users"

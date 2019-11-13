@@ -7,16 +7,12 @@ import com.google.firebase.database.DatabaseReference
 import java.util.ArrayList
 import java.util.HashMap
 
-class MyDatabase(context: Context, val databaseReference: DatabaseReference) {
+class MyDatabase(context: Context, reference: DatabaseReference) {
 
     private val androidId: String = Settings.Secure.getString(context.contentResolver,
         Settings.Secure.ANDROID_ID)
 
-    val HEADER = "$USERS/$androidId/"
-
-    fun getKey(): String? {
-        return databaseReference.child("users").push().key
-    }
+    val databaseReference = reference.child(USERS).child(androidId)
 
     fun write(location: MyLocation) {
         val key = databaseReference.push().key as String
